@@ -36,3 +36,19 @@ def plot_cumulative_hours(dates, cumulative_hours):
     plt.tight_layout()
     plt.savefig("cumulative_duration.png")
     plt.show()
+
+
+def display_country_comparison(results, winner):
+    for country, stats in results.items():
+        average = (
+            f"{stats['average']:.2f}"
+            if stats["average"] is not None
+            else "Unavailable"
+        )
+
+        print(f"\n{country}")
+        print(f"EVAs: {stats['count']}")
+        print(f"Total hours: {stats['total']:.2f}")
+        print(f"Average hours: {average}")
+
+    print(f"\nResult: {winner}")

@@ -41,3 +41,49 @@ def calculate_cumulative_hours(records):
         cumulative_hours.append(total_hours)
 
     return dates, cumulative_hours
+
+def compare_countries(records, country_a, country_b, start_year, end_year):
+
+    if start_year > end_year:
+        raise ValueError("Start year cannot be greater than end year.")
+    
+    if country_a == country_b:
+        raise ValueError("Please select two different countries.")
+
+    countries = {country for date, duration, country in records}
+
+    if country_a not in countries or country_b not in countries:
+        raise ValueError("One or both countries are not recognised.")
+
+    results = {}
+
+    for country in (country_a, country_b):
+
+        matching_records = [
+            duration
+            for date, duration, record_country in records
+            if record_country == country
+            and start_year <= date.year <= end_year
+        ]
+
+        count = len(matching_records)
+        total = sum(matching_records)
+        average = total / count if count > 0 else None
+
+        results[country] = {
+            "count": count,
+            "total": total,
+            "average": average
+        }
+
+    total_a = results[country_a]["total"]
+    total_b = results[country_b]["total"]
+
+    if total_a > total_b:
+        winner = country_a
+    elif total_b > total_a:
+        winner = country_b
+    else:
+        winner = "Tie"
+
+    return results, winner

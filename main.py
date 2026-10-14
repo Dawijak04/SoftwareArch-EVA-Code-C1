@@ -3,16 +3,28 @@ import os
 
 from data_loader import load_eva_data
 from data_processing import prepare_records
+from inputs import get_comparison_inputs
 from analysis import (
     calculate_categories,
     calculate_country_hours,
-    calculate_cumulative_hours
+    calculate_cumulative_hours,
+    compare_countries
 )
 from presentation import (
     print_category_statistics,
     plot_country_hours,
-    plot_cumulative_hours
+    plot_cumulative_hours,
+    display_country_comparison
 )
+
+def run_country_comparison(records):
+    try:
+        inputs = get_comparison_inputs()
+        results, winner = compare_countries(records, *inputs)
+        display_country_comparison(results, winner)
+
+    except ValueError as error:
+        print(f"Invalid input: {error}")
 
 
 def main():
@@ -34,6 +46,9 @@ def main():
     print_category_statistics(categories)
     plot_country_hours(country_hours)
     plot_cumulative_hours(dates, cumulative_hours)
+
+    #Compare countries
+    run_country_comparison(records)
 
 
 if __name__ == "__main__":
