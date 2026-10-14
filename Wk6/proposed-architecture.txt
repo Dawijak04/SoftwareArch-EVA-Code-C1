@@ -1,0 +1,45 @@
+ACTIVITY 2 - PROPOSED ARCHITECTURE
+
+1. Proposed modules and responsibilities
+main.py - Coordinates the application by calling the other modules.
+data_loader.py - Reads EVA records from the JSON file.
+data_processing.py - Checks records, skips entries without dates or durations, and converts dates and durations into usable values.
+analysis.py - Calculates duration categories, country totals and cumulative EVA duration. The new country comparison will also belong here.
+presentation.py - Prints results and creates the two existing graphs.
+
+2. Dependencies and interfaces
+main.py calls the other modules through functions.
+data_loader.py provides load_eva_data(file_path), returning raw records.
+data_processing.py provides prepare_records(raw_records), returning prepared records.
+analysis.py accepts prepared records and returns calculated results, without reading files or creating graphs.
+presentation.py accepts calculated results and displays or saves them, without reading JSON.
+
+3. Architecture diagram
+
+               main.py
+                  |
+                  v
+            data_loader.py
+                  |
+            raw EVA records
+                  |
+                  v
+          data_processing.py
+                  |
+          prepared EVA records
+                  |
+                  v
+             analysis.py
+                  |
+          calculated results
+                  |
+                  v
+           presentation.py
+
+The diagram shows the data flow coordinated by main.py. Analysis does not depend on presentation, and presentation does not depend on JSON loading.
+
+4. Why this structure?
+Each module has one main responsibility, so related functions stay together (high cohesion). Functions pass data between modules instead of relying on shared script variables (low coupling). In the inherited code, EVA calculations and Matplotlib charts are mixed in evacodev2.py; moving them to analysis.py and presentation.py separates them.
+
+5. Preserving existing behaviour
+The restructured application must still skip records missing dates or durations, use the same short/standard/long thresholds, print category counts and percentages, calculate country and cumulative durations and generate country_duration.png and cumulative_duration.png. These results will be checked after restructuring in Activity 3.

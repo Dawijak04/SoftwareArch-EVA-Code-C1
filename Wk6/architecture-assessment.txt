@@ -1,0 +1,20 @@
+Initial Architectural Assessment
+
+1. Existing modules and responsibilities
+main.py: Starts the application by running evacodev2.py.
+evacodev2.py: Loads EVA data, skips incomplete records, converts dates and durations, calculates statistics, prints results, and creates graphs.
+eva-data.json: Stores the EVA records used by the application.
+
+2. Areas where responsibilities are mixed
+Most responsibilities are combined in evacodev2.py. It reads and processes data, performs calculations, and displays results in the same script. main.py only launches that script rather than coordinating separate functions.
+
+3. Dependencies between parts of the application
+main.py depends on evacodev2.py.
+evacodev2.py depends on eva-data.json and Matplotlib.
+The calculations and graphs share variables within the same script, making them closely connected.
+
+4. Functionality difficult to test independently
+Country totals and cumulative durations are calculated in top-level code, so they cannot easily be tested with sample data. Importing evacodev2.py also loads the file and generates graphs. The duration classification function is easier to test, but importing the script still triggers these other operations.
+
+Conclusion
+The application works as a single analysis script but mixes several responsibilities. Separating data loading, processing, analysis, and presentation into functions and modules would make it easier to test and extend.

@@ -1,0 +1,18 @@
+ADR-002: Separate User Input from Analysis and Presentation
+
+Context:
+The new country-comparison feature requires user input, calculations and displaying results. Combining these responsibilities in main.py would make it more complex and harder to maintain.
+
+Alternatives:
+1. Implement all functionality in main.py.
+2. Handle input and output together in presentation.py.
+3. Use a separate inputs.py module for user input.
+
+Decision:
+Use inputs.py for collecting user input, analysis.py for calculations, presentation.py for displaying results and main.py for coordinating these operations.
+
+Rationale:
+This improves separation of concerns and keeps each module focused on one responsibility. It also allows the analysis functions to be tested independently without requiring user interaction.
+
+Consequences:
+The application contains an additional module, but main.py remains simple and future changes to user input or output can be made without affecting the analysis logic.

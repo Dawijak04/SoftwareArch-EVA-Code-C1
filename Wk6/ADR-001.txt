@@ -1,0 +1,19 @@
+ADR-001: Separate EVA application responsibilities into modules
+
+Context:
+The inherited evacodev2.py script loads and prepares data, calculates EVA statistics, prints results and creates graphs. These mixed responsibilities make the code harder to change and test independently.
+
+Alternatives:
+1. Keep the existing script and add more functions. This is simple but leaves responsibilities mixed.
+2. Split the code into many small modules or classes. This provides separation but adds unnecessary complexity for a small application.
+3. Split the code into a few modules based on responsibility.
+
+Decision:
+Use main.py to coordinate four focused modules: data_loader.py, data_processing.py, analysis.py and presentation.py. Modules will communicate through functions that accept inputs and return results.
+
+Rationale:
+This provides separation of concerns, meaningful module boundaries, high cohesion and lower coupling. Analysis can be tested without loading JSON or displaying graphs. The future country-comparison feature can be added mainly to the analysis and presentation functionality.
+
+Consequences:
+Benefits: clearer code, easier testing, simpler maintenance and easier feature additions.
+Trade-offs: more files and function interfaces to maintain. The restructuring must be checked carefully to ensure existing results and graphs remain unchanged.

@@ -1,0 +1,22 @@
+Maintainability Evaluation
+
+1. How many modules needed modification for the new functionality?
+The new country-comparison functionality was added to analysis.py, presentation.py and main.py, with a new inputs.py module for user input. The data loading and processing modules did not need modification.
+
+2. Which modules depend on other modules?
+main.py depends on the other modules to coordinate the application. analysis.py performs calculations independently, while presentation.py handles displaying results and inputs.py handles user input.
+
+3. Can calculations be tested independently?
+Yes. The functions in analysis.py accept records as parameters and return results without needing to read JSON files or generate graphs. This allows them to be tested using small datasets.
+
+4. Are responsibilities easier to identify?
+Yes. Previously, most functionality was contained in evacodev2.py. Now each module has a clear responsibility, making the code easier to understand and maintain.
+
+5. Has duplication been reduced?
+The application uses shared analysis functions rather than repeating calculations in the input or presentation modules. This makes it easier to reuse existing functionality.
+
+6. Did restructuring introduce unnecessary complexity?
+The application now contains more files, but each has a specific purpose. No additional frameworks or complex abstractions were introduced, so the increased structure is justified.
+
+Conclusion
+The restructured application has improved separation of concerns, reduced coupling and increased testability. The new country-comparison feature could be implemented without changing unrelated data-loading or processing functionality.
